@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Architect | Build Super-Intelligent Agents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif'],
+            },
+            colors: {
+              background: '#02040a',
+              surface: '#0a0f1e',
+              n8n: {
+                DEFAULT: '#FF6D5A',
+                glow: '#ff8f82',
+                dim: '#b33e30'
+              },
+              pinecone: {
+                DEFAULT: '#0EA5E9',
+                glow: '#38bdf8',
+                dim: '#0369a1'
+              },
+              neon: {
+                purple: '#d946ef',
+                blue: '#6366f1',
+                green: '#22c55e'
+              }
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shimmer': 'shimmer 2.5s linear infinite',
+              'glow': 'glow 2s ease-in-out infinite alternate',
+              'slide-up': 'slideUp 0.5s ease-out forwards',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '200% 0' },
+                '100%': { backgroundPosition: '-200% 0' },
+              },
+              glow: {
+                '0%': { boxShadow: '0 0 5px rgba(99, 102, 241, 0.2)' },
+                '100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.6)' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+              'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #02040a;
+        color: #ffffff;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      /* Base Glass Panel - High Quality Blur */
+      .glass-panel {
+        background: rgba(15, 20, 35, 0.65);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 
+          0 4px 6px -1px rgba(0, 0, 0, 0.2),
+          0 2px 4px -1px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1); /* Top edge highlight */
+      }
+      
+      /* 3D Pop Effect - Aggressive Lift and Shadow */
+      .glass-pop {
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Spring physics */
+        transform-style: preserve-3d;
+        position: relative;
+      }
+      
+      .glass-pop:hover {
+        background: rgba(30, 40, 60, 0.8); /* Slightly lighter on hover */
+        border-color: rgba(255, 255, 255, 0.35); /* Bright border pop */
+        transform: translateY(-12px) scale(1.02); /* Significant lift */
+        z-index: 50;
+        
+        /* Deep, multi-layer shadow for 3D illusion */
+        box-shadow: 
+          0 25px 50px -12px rgba(0, 0, 0, 0.9), /* Main deep shadow */
+          0 10px 20px -5px rgba(0, 0, 0, 0.6), /* Ambient occlusion */
+          0 0 40px rgba(99, 102, 241, 0.15), /* Subtle blue atmospheric glow */
+          inset 0 1px 0 rgba(255, 255, 255, 0.4); /* Sharp top edge reflection */
+      }
+
+      /* Animated Text Gradients */
+      .text-gradient-animated {
+        background: linear-gradient(to right, #c084fc, #6366f1, #3b82f6, #c084fc);
+        background-size: 200% auto;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientMove 4s linear infinite;
+      }
+
+      .text-gradient-n8n-animated {
+        background: linear-gradient(to right, #FF6D5A, #F59E0B, #FF6D5A);
+        background-size: 200% auto;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientMove 4s linear infinite;
+      }
+
+      @keyframes gradientMove {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #02040a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+      
+      /* 3D Space Utilities */
+      .preserve-3d { transform-style: preserve-3d; }
+      .perspective-2000 { perspective: 2000px; }
+      .backface-hidden { backface-visibility: hidden; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
